@@ -29,20 +29,18 @@ def get_num_facts():
     if not email:
         errors['email'] = ['This is a required field']
     if not color:
-        errors['color'] = ['This is a required field',
-                           'Please choose either red, green, orange, or blue']
-    if color not in ['red', 'green', 'orange', 'blue']:
+        errors['color'] = ['This is a required field']
+    elif color not in ['red', 'green', 'orange', 'blue']:
         errors['color'] = ['Please choose either red, green, orange, or blue']
 
     if not year:
-        errors['year'] = ['This is a required field',
-                          'Please enter a year between 1900 and 2000']
+        errors['year'] = ['This is a required field']
     else:
         try:
             year = int(year)
             if year < 1900 or year > 2000:
                 errors['year'] = ['Please enter a year between 1900 and 2000']
-        except:
+        except ValueError:
             errors['year'] = ['Please enter a numeric value']
 
     if errors:
@@ -60,4 +58,4 @@ def get_num_facts():
     lucky['year'] = {'fact': year_text, 'year': year}
     lucky['num'] = {'fact': num_text, 'num': num}
 
-    return jsonify(lucky)
+    return (jsonify(lucky), 201)
